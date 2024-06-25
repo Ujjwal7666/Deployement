@@ -143,16 +143,15 @@ LOGGING = {
         },
     },
     'handlers': {
-        'file': {
+        'console': {
             'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(os.getenv('TMPDIR', '.'), 'django_debug.log'),
+            'class': 'logging.StreamHandler',
             'formatter': 'timestamp'
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['file'],
+            'handlers': ['console'],
             'level': 'INFO',
             'propagate': True,
         },
