@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 from decouple import config
 
@@ -131,6 +131,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -138,19 +140,15 @@ LOGGING = {
         'timestamp': {
             'format': '{asctime} {levelname} {message} {lineno} ',
             'style': '{',
-
         },
-
     },
     'handlers': {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': 'debug.log',
+            'filename': os.path.join(os.getenv('TMPDIR', '.'), 'django_debug.log'),
             'formatter': 'timestamp'
         },
-
-
     },
     'loggers': {
         'django': {
@@ -158,6 +156,5 @@ LOGGING = {
             'level': 'INFO',
             'propagate': True,
         },
-
     },
 }
