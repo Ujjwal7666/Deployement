@@ -1,8 +1,9 @@
+import logging
 from django.shortcuts import render , redirect
 from django.views import View
 from django.contrib.auth.models import User 
 
-
+logger = logging.getLogger("django")
 class SignupView(View):
     def get(self, request):
         return render(request, 'userauth/signup.html')
@@ -22,9 +23,10 @@ class SignupView(View):
                      return render(request, 'userauth/signup.html', {'error_message': 'Passwords do not match.'})
                     
                 User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, password=password1)
-                return redirect('/login/')
+                return redirect('login')
+            return render(request, 'userauth/signup.html')
         except Exception as exe:
-            print("sometiing erro", exe)
+            logger.error(str(exe), exc_info=True)
             return render(request,'userauth/signup.html')
 
-        return render(request, 'userauth/signup.html')
+        

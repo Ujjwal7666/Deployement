@@ -1,7 +1,9 @@
+import logging
 from django.shortcuts import render , redirect
 from django.views import View
 from django.contrib.auth.models import User 
 from django.contrib.auth import authenticate, login, logout
+logger = logging.getLogger("django")
 
 class LoginView(View):
     def get (self, request):
@@ -18,7 +20,7 @@ class LoginView(View):
                 return redirect('home')
             return render(request, 'userauth/login.html', {'error': 'Invalid username or password'})
         except Exception as exe:
-            print("sometiing erro", exe)
+            logger.error(str(exe), exc_info=True)
             return render(request,'userauth/login.html')
 
     
